@@ -12,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { useTaskContext } from "@/context/tasks";
 import StatusAlertDialog from "./status-alert-dialog";
 import { useState } from "react";
@@ -35,7 +34,12 @@ export default function TaskModal({ open, onOpenChange }: TaskModalProps) {
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="min-h-[80%] flex flex-col min-w-[80%] p-8 space-y-4">
+        <DialogContent
+          className="min-h-[80%] flex flex-col min-w-[80%] p-8 space-y-4"
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+          }}
+        >
           <DialogHeader>
             <DialogTitle className="text-2xl">{task?.name}</DialogTitle>
           </DialogHeader>

@@ -6,7 +6,7 @@ import { useTaskContext } from "@/context/tasks";
 import TaskList from "./task-list";
 
 export default function Board({ classname }: { classname?: string }) {
-  const { statuses, statusOrders, setStatuses, setStatusOrders } =
+  const { statuses, tasks, statusOrders, setStatuses, setStatusOrders } =
     useTaskContext();
 
   const getStatusesQuery = useQuery({
@@ -32,7 +32,12 @@ export default function Board({ classname }: { classname?: string }) {
           >
             <div className="p-4 flex items-center justify-between">
               <div className="font-medium text-sm">
-                {statuses[status].label} <span>{index + 1}</span>
+                {statuses[status].label}{" "}
+                <span>
+                  {typeof tasks[status]?.length !== "undefined"
+                    ? tasks[status].length
+                    : 0}
+                </span>
               </div>
             </div>
             <TaskList statusKey={status} classname="flex-1 overflow-auto" />

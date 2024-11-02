@@ -6,10 +6,15 @@ type TaskContextType = {
   activeTask: string | undefined;
   setActiveTask: React.Dispatch<React.SetStateAction<string | undefined>>;
 
+  activeTaskIndex: number | undefined;
+  setActiveTaskIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
+
+  activeStatus: string | undefined;
+  setActiveStatus: React.Dispatch<React.SetStateAction<string | undefined>>;
+
   tasks: TaskMap;
   getTask: (taskId: string | undefined) => Task | undefined;
   setTasks: (tasks: Task[]) => void;
-  addTask: (task: Task) => void;
   updateTaskStatus: (
     taskId: string,
     currentStatus: string,
@@ -21,6 +26,9 @@ type TaskContextType = {
 
   statusOrders: string[];
   setStatusOrders: React.Dispatch<React.SetStateAction<string[]>>;
+
+  taskModalOpen: boolean;
+  setTaskModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const TaskContext = createContext<TaskContextType | undefined>(
@@ -33,9 +41,19 @@ export const TaskContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [activeTask, setActiveTask] = useState<string | undefined>(undefined);
+  const [activeTaskIndex, setActiveTaskIndex] = useState<number | undefined>(
+    undefined
+  );
+
+  const [activeStatus, setActiveStatus] = useState<string | undefined>(
+    undefined
+  );
+
   const [tasks, setTasksState] = useState<TaskMap>({});
   const [statuses, setStatusesState] = useState<StatusesConfig>({});
   const [statusOrders, setStatusOrders] = useState<string[]>([]);
+
+  const [taskModalOpen, setTaskModalOpen] = useState(false);
 
   const setTasks = (newTasks: Task[]) => {
     const tasksByStatus: TaskMap = {};
@@ -65,8 +83,6 @@ export const TaskContextProvider = ({
       .find((task) => task.id === taskId);
   };
 
-  const addTask = (task: Task) => {};
-
   const updateTaskStatus = (
     taskId: string,
     currentStatus: string,
@@ -94,6 +110,7 @@ export const TaskContextProvider = ({
       statusConfig[status.key] = status;
     });
     setStatusesState(statusConfig);
+    setActiveStatus(statusList[0].key);
   };
 
   return (
@@ -101,15 +118,20 @@ export const TaskContextProvider = ({
       value={{
         activeTask,
         setActiveTask,
+        activeTaskIndex,
+        setActiveTaskIndex,
+        activeStatus,
+        setActiveStatus,
         tasks,
         getTask,
         setTasks,
-        addTask,
         updateTaskStatus,
         statusOrders,
         setStatusOrders,
         statuses,
         setStatuses,
+        taskModalOpen,
+        setTaskModalOpen,
       }}
     >
       {children}

@@ -32,7 +32,7 @@ const generateMockTasks = (status: string, numTasks: number): Task[] => {
 };
 
 const mockTasks = (status: string) =>
-  generateMockTasks(status, faker.number.int({ min: 1, max: 2 }));
+  generateMockTasks(status, faker.number.int({ min: 3, max: 7 }));
 
 export const getStatuses = async (): Promise<{
   statuses: Status[];
