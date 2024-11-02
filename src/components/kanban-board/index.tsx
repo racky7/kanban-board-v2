@@ -1,7 +1,5 @@
-import { cn } from "@/lib/utils";
+import Board from "./components/board";
 
-export default function KanbanBoard({ classname }: { classname?: string }) {
-  return (
-    <div className={cn("w-full h-full px-2 pt-1", classname)}>Kanban Board</div>
-  );
+export default function KanbanBoard() {
+  return <Board />;
 }
