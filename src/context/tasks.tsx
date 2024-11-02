@@ -29,6 +29,14 @@ type TaskContextType = {
 
   taskModalOpen: boolean;
   setTaskModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  statusAlertModalOpen: boolean;
+  setStatusAlertModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  pendingStatus: Task["status"] | undefined;
+  setPendingStatus: React.Dispatch<
+    React.SetStateAction<Task["status"] | undefined>
+  >;
 };
 
 export const TaskContext = createContext<TaskContextType | undefined>(
@@ -54,6 +62,12 @@ export const TaskContextProvider = ({
   const [statusOrders, setStatusOrders] = useState<string[]>([]);
 
   const [taskModalOpen, setTaskModalOpen] = useState(false);
+
+  const [statusAlertModalOpen, setStatusAlertModalOpen] = useState(false);
+
+  const [pendingStatus, setPendingStatus] = useState<
+    Task["status"] | undefined
+  >(undefined);
 
   const setTasks = (newTasks: Task[]) => {
     const tasksByStatus: TaskMap = {};
@@ -132,6 +146,10 @@ export const TaskContextProvider = ({
         setStatuses,
         taskModalOpen,
         setTaskModalOpen,
+        statusAlertModalOpen,
+        setStatusAlertModalOpen,
+        pendingStatus,
+        setPendingStatus,
       }}
     >
       {children}

@@ -13,10 +13,13 @@ export default function KeyboardShortcuts() {
     statusOrders,
     taskModalOpen,
     setTaskModalOpen,
+    statusAlertModalOpen,
+    setStatusAlertModalOpen,
+    setPendingStatus,
   } = useTaskContext();
 
   const scrollToItem = (id: string) => {
-    const element = document.querySelector(`[data-taskId="${id}"]`);
+    const element = document.querySelector(`[data-taskid="${id}"]`);
     element?.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
@@ -32,33 +35,6 @@ export default function KeyboardShortcuts() {
     setActiveTaskIndex(index);
     setActiveTask(task.id);
     scrollToItem(task.id);
-  };
-
-  const handleArrowDown = () => {
-    if (!activeStatus || !tasks[activeStatus]?.length) return;
-
-    if (typeof activeTaskIndex === "undefined") {
-      updateActiveTask(0);
-      return;
-    }
-
-    const newIndex = activeTaskIndex + 1;
-    if (newIndex < tasks[activeStatus].length) {
-      updateActiveTask(newIndex);
-    }
-  };
-
-  const handleArrowUp = () => {
-    if (!activeStatus || tasks[activeStatus].length < 2) return;
-
-    if (typeof activeTaskIndex === "undefined") {
-      updateActiveTask(0);
-      return;
-    }
-
-    if (activeTaskIndex > 0) {
-      updateActiveTask(activeTaskIndex - 1);
-    }
   };
 
   const getAppropriateTaskIndex = (
@@ -81,8 +57,36 @@ export default function KeyboardShortcuts() {
     updateActiveTask(newIndex, newStatus);
   };
 
+  const handleArrowDown = () => {
+    if (!activeStatus || !tasks[activeStatus]?.length || taskModalOpen) return;
+
+    if (typeof activeTaskIndex === "undefined") {
+      updateActiveTask(0);
+      return;
+    }
+
+    const newIndex = activeTaskIndex + 1;
+    if (newIndex < tasks[activeStatus].length) {
+      updateActiveTask(newIndex);
+    }
+  };
+
+  const handleArrowUp = () => {
+    if (!activeStatus || tasks[activeStatus].length < 2 || taskModalOpen)
+      return;
+
+    if (typeof activeTaskIndex === "undefined") {
+      updateActiveTask(0);
+      return;
+    }
+
+    if (activeTaskIndex > 0) {
+      updateActiveTask(activeTaskIndex - 1);
+    }
+  };
+
   const handleArrowRight = () => {
-    if (!activeStatus) return;
+    if (!activeStatus || taskModalOpen) return;
 
     const currentStatusIndex = statusOrders.indexOf(activeStatus);
     const isNotLastStatus = currentStatusIndex < statusOrders.length - 1;
@@ -94,7 +98,7 @@ export default function KeyboardShortcuts() {
   };
 
   const handleArrowLeft = () => {
-    if (!activeStatus) return;
+    if (!activeStatus || taskModalOpen) return;
 
     const currentStatusIndex = statusOrders.indexOf(activeStatus);
 
@@ -106,11 +110,22 @@ export default function KeyboardShortcuts() {
     }
   };
 
+  const handleStatusHotKey = (event: KeyboardEvent) => {
+    if (!taskModalOpen || statusAlertModalOpen) {
+      return;
+    }
+
+    const statusIndex: number = +event.key - 1;
+
+    setPendingStatus(statusOrders[statusIndex]);
+    setStatusAlertModalOpen(true);
+  };
+
   useHotkeys("arrowRight", handleArrowRight);
   useHotkeys("arrowLeft", handleArrowLeft);
   useHotkeys("arrowDown", handleArrowDown);
   useHotkeys("arrowUp", handleArrowUp);
-
+  useHotkeys(["1", "2", "3"], handleStatusHotKey);
   useHotkeys("enter", () => {
     if (!activeTask) return;
 
@@ -118,5 +133,6 @@ export default function KeyboardShortcuts() {
       setTaskModalOpen(true);
     }
   });
+
   return <></>;
 }

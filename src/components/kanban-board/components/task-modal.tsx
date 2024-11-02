@@ -14,8 +14,6 @@ import {
 } from "@/components/ui/select";
 import { useTaskContext } from "@/context/tasks";
 import StatusAlertDialog from "./status-alert-dialog";
-import { useState } from "react";
-import { Task } from "@/lib/task";
 
 type TaskModalProps = {
   open: boolean;
@@ -23,11 +21,16 @@ type TaskModalProps = {
 };
 
 export default function TaskModal({ open, onOpenChange }: TaskModalProps) {
-  const { activeTask, getTask, statuses, updateTaskStatus } = useTaskContext();
-  const [statusAlertOpen, setStatusAlertOpen] = useState(false);
-  const [pendingStatus, setPendingStatus] = useState<
-    Task["status"] | undefined
-  >(undefined);
+  const {
+    activeTask,
+    getTask,
+    statuses,
+    updateTaskStatus,
+    statusAlertModalOpen,
+    setStatusAlertModalOpen,
+    pendingStatus,
+    setPendingStatus,
+  } = useTaskContext();
 
   const task = getTask(activeTask);
 
@@ -51,7 +54,7 @@ export default function TaskModal({ open, onOpenChange }: TaskModalProps) {
                   value={task?.status}
                   onValueChange={(value) => {
                     setPendingStatus(value);
-                    setStatusAlertOpen(true);
+                    setStatusAlertModalOpen(true);
                   }}
                 >
                   <SelectTrigger className="w-[180px]">
@@ -108,15 +111,16 @@ export default function TaskModal({ open, onOpenChange }: TaskModalProps) {
           <div className="text-lg font-medium">Activity</div>
         </DialogContent>
       </Dialog>
+
       <StatusAlertDialog
-        open={statusAlertOpen}
+        open={statusAlertModalOpen}
         onCancel={() => {
-          setStatusAlertOpen(false);
+          setStatusAlertModalOpen(false);
         }}
         onConfirm={() => {
           if (task && pendingStatus) {
             updateTaskStatus(activeTask!, task.status, pendingStatus);
-            setStatusAlertOpen(false);
+            setStatusAlertModalOpen(false);
           }
         }}
       />

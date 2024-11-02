@@ -30,14 +30,14 @@ export default function Board({ classname }: { classname?: string }) {
             key={`status-${index}`}
             className="h-full flex flex-col min-w-[356px] max-w-[356px] px-1 bg-gray-100"
           >
-            <div className="p-4 flex items-center justify-between">
+            <div className="p-4 flex items-center gap-x-2">
               <div className="font-medium text-sm">
                 {statuses[status].label}{" "}
-                <span>
-                  {typeof tasks[status]?.length !== "undefined"
-                    ? tasks[status].length
-                    : 0}
-                </span>
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {typeof tasks[status]?.length !== "undefined"
+                  ? tasks[status].length
+                  : 0}
               </div>
             </div>
             <TaskList statusKey={status} classname="flex-1 overflow-auto" />

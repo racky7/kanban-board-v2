@@ -23,7 +23,7 @@ const TaskCard = ({
 }) => {
   return (
     <div
-      data-taskId={task.id}
+      data-taskid={task.id}
       className={cn(
         "bg-white hover:bg-gray-50 cursor-default mb-2 p-4 rounded-md text-sm space-y-4",
         isActive ? "border border-indigo-500" : null
