@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { useTaskContext } from "@/context/tasks";
 import StatusAlertDialog from "./status-alert-dialog";
+import CommentArea from "./comment-area";
 
 type TaskModalProps = {
   open: boolean;
@@ -38,7 +39,7 @@ export default function TaskModal({ open, onOpenChange }: TaskModalProps) {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
-          className="min-h-[80%] flex flex-col min-w-[80%] p-8 space-y-4"
+          className="min-h-[80%] max-h-[80%] flex flex-col min-w-[80%] space-y-2"
           onOpenAutoFocus={(e) => {
             e.preventDefault();
           }}
@@ -109,6 +110,7 @@ export default function TaskModal({ open, onOpenChange }: TaskModalProps) {
             </div>
           </div>
           <div className="text-lg font-medium">Activity</div>
+          <CommentArea taskId={task?.id} className="flex-1" />
         </DialogContent>
       </Dialog>
 
