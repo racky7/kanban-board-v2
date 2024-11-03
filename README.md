@@ -4,6 +4,8 @@ Implementation of Kanban board using ReactJs.
 
 ## Demo
 
+https://kanban-board-x.vercel.app
+
 ## Local Setup
 
 #### 1. Install Package Dependencies
