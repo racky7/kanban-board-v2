@@ -9,8 +9,8 @@ const mockComments = Array.from({ length: 4 }, () => ({
   createdAt: faker.date.recent({ days: 1 }),
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getComments = async (taskId: string): Promise<Comment[]> => {
+  void taskId;
   await new Promise((resolve) => setTimeout(resolve, 500));
   return Promise.resolve(mockComments);
 };
