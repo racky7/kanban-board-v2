@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { getStatuses } from "@/lib/api";
 import { useEffect } from "react";
-import { useTaskContext } from "@/context/tasks";
 import TaskList from "./task-list";
+import { useTaskContext } from "@/lib/hooks/use-task-context";
 
 export default function Board({ classname }: { classname?: string }) {
   const { statuses, tasks, statusOrders, setStatuses, setStatusOrders } =

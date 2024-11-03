@@ -1,4 +1,4 @@
-import { useTaskContext } from "@/context/tasks";
+import { useTaskContext } from "@/lib/hooks/use-task-context";
 import { useHotkeys } from "react-hotkeys-hook";
 
 export default function KeyboardShortcuts() {

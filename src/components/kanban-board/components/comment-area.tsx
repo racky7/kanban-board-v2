@@ -55,7 +55,7 @@ export default function CommentArea({
 
   return (
     <div
-      className={cn("max-w-[70%] h-full overflow-auto space-y-2", className)}
+      className={cn("lg:max-w-[70%] h-full overflow-auto space-y-2", className)}
     >
       <div>
         {comments.map((comment) => (

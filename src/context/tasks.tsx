@@ -1,6 +1,6 @@
-import React, { createContext, useState } from "react";
-import merge from "deepmerge";
+import { createContext, useState } from "react";
 import { Status, StatusesConfig, Task, TaskMap } from "@/lib/task";
+import merge from "deepmerge";
 
 type TaskContextType = {
   activeTask: string | undefined;
@@ -108,13 +108,15 @@ export const TaskContextProvider = ({
     }
     task.status = updatedStatus;
 
-    // remove task from current status && update task in new status
     setTasksState((previousTasks) => {
-      previousTasks[currentStatus] = previousTasks[currentStatus].filter(
+      const newTasks = { ...previousTasks };
+
+      newTasks[currentStatus] = previousTasks[currentStatus].filter(
         (t: Task) => t.id !== taskId
       );
 
-      return merge(previousTasks, { [updatedStatus]: [task] });
+      newTasks[updatedStatus] = [task, ...(newTasks[updatedStatus] || [])];
+      return newTasks;
     });
   };
 
@@ -156,11 +158,3 @@ export const TaskContextProvider = ({
     </TaskContext.Provider>
   );
 };
-
-export function useTaskContext() {
-  const context = React.useContext(TaskContext);
-  if (context === undefined) {
-    throw new Error("useTaskContext must be used within a TaskContextProvider");
-  }
-  return context;
-}

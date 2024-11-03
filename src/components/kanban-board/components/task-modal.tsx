@@ -12,9 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useTaskContext } from "@/context/tasks";
 import StatusAlertDialog from "./status-alert-dialog";
 import CommentArea from "./comment-area";
+import { useTaskContext } from "@/lib/hooks/use-task-context";
 
 type TaskModalProps = {
   open: boolean;
@@ -118,11 +118,13 @@ export default function TaskModal({ open, onOpenChange }: TaskModalProps) {
         open={statusAlertModalOpen}
         onCancel={() => {
           setStatusAlertModalOpen(false);
+          setPendingStatus(undefined);
         }}
         onConfirm={() => {
           if (task && pendingStatus) {
             updateTaskStatus(activeTask!, task.status, pendingStatus);
             setStatusAlertModalOpen(false);
+            setPendingStatus(undefined);
           }
         }}
       />
