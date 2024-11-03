@@ -1,50 +1,63 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Kanban Board
+Implementation of Kanban board using ReactJs.
 
-Currently, two official plugins are available:
+## Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Local Setup
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+#### 1. Install Package Dependencies
+```bash
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+#### 2. Start the Project
+```bash
+npm run dev
 ```
+
+
+
+## Features
+
+- Change status of Task from Card Itself
+- Navigate through Task using Keyboard Arrow Keys
+- Open Task in Modal (Using 'Enter' Key Press)
+- Perform Actions In Modal - Change Status (Using Keyboard Shortcuts - 1, 2, 3), Add Comments
+
+
+## Design Choices
+
+### 1. Technical Stack Decisions
+
+* **shadcn/ui**: Chosen for its accessible, customizable components that provide a modern look while maintaining high performance
+
+* **React Context**: Used for global state management, particularly for task status and modal states
+
+* **React Query**: Implemented for efficient server state management and data caching
+
+* **React Hotkeys**: Integrated for comprehensive keyboard navigation and shortcuts
+
+* **Faker**: Utilized to generate realistic mock data for development and testing
+
+### 2. Performance-First Approach
+
+React Query Features:
+
+- Automatic background data updates
+
+- Optimistic updates for status changes
+
+- Efficient caching strategy
+
+
+- Context Optimization: Carefully structured to prevent unnecessary re-renders
+
+### 3. Keyboard Navigation Implementation
+
+React Hotkeys Integration:
+
+- Global navigation with arrow keys (↑↓)
+
+- Task detail access with Enter
+- Status change shortcuts (1,2,3)
